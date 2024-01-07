@@ -1,0 +1,2 @@
+CompileFlags:
+  Add: [-std=c++20, -I../include, -I/usr/lib/wx/include/gtk3-unicode-3.2, -I/usr/include/wx-3.2, -DWXUSINGDLL, -D__WXGTK3__, -D__WXGTK__, -pthread]
