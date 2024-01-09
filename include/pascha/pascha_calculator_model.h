@@ -22,8 +22,8 @@
 #define PASCHA_PASCHA_CALCULATOR_MODEL_H
 
 #include "i_calculator_model.h"
-#include <vector>
 #include <memory>
+#include <vector>
 
 namespace pascha
 {

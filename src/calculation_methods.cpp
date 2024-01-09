@@ -35,7 +35,8 @@ Date JulianCalculationMethod::calculate(Year year) const
   CalcInt e = (2 * a + 4 * b - d + 34) % 7;
   CalcInt month = (d + e + 114) / 31;
   CalcInt day = (d + e + 114) % 31 + 1;
-  return julianToGregorian(Date{year, static_cast<Month>(month), static_cast<Day>(day)});
+  return julianToGregorian(
+      Date{year, static_cast<Month>(month), static_cast<Day>(day)});
 } // JulianCalculationMethod::calculate
 
 Date GregorianCalculationMethod::calculate(Year year) const

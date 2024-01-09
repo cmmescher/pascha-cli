@@ -116,12 +116,12 @@ CalcInt revJulianToJdn(const Date& date)
   if (y < 0 && y % 100 != 0) { --jdn1; }
 
   // Retain leap year when 200 remainder after dividing by 900
-  CalcInt jdn2i{y+ 300};
+  CalcInt jdn2i{y + 300};
   CalcInt jdn2{jdn2i / 900};
   if (jdn2i < 0 && jdn2i % 900 != 0) { --jdn2; }
 
   // Retain leap year when 600 remainder after dividing by 900
-  CalcInt jdn3i{y+ 700};
+  CalcInt jdn3i{y + 700};
   CalcInt jdn3{jdn3i / 900};
   if (jdn3i < 0 && jdn3i % 900 != 0) { --jdn3; }
 

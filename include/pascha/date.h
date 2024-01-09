@@ -35,7 +35,7 @@ struct Date
 
 struct Weeks
 {
-    std::int64_t value;
+  std::int64_t value;
   explicit Weeks(std::int64_t value) : value(value) {}
 }; // struct Weeks
 

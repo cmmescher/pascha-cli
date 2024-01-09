@@ -23,8 +23,8 @@
 
 #include <chrono>
 #include <ctime>
-#include <iomanip>
 #include <getopt.h>
+#include <iomanip>
 #include <string>
 #include <string_view>
 
@@ -58,9 +58,10 @@ void CliView::createView()
 void CliView::update(const Date& date)
 {
   std::cout << std::setfill('0') << std::setw(2) << date.month
-            << m_date_separator << std::setfill('0') << std::setw(2) << date.day;
+            << m_date_separator << std::setfill('0') << std::setw(2)
+            << date.day;
   if (!m_suppress_year && m_given_year) {
-    std::cout <<  m_date_separator << date.year;
+    std::cout << m_date_separator << date.year;
   }
   std::cout << '\n';
 } // CliView::update(const Date&)

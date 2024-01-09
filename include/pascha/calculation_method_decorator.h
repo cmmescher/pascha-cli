@@ -37,7 +37,10 @@ class CalculationMethodDecorator : public ICalculationMethod
 
  protected:
   const ICalculationMethod& calculation_method() const
-    { return *m_calculation_method; }
+  {
+    return *m_calculation_method;
+  }
+
  private:
   std::shared_ptr<ICalculationMethod> m_calculation_method{};
 }; // class CalculationMethodDecorator

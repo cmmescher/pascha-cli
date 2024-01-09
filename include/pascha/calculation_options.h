@@ -42,22 +42,23 @@ struct CalculationOptions
   Year year;
 }; // struct CalculationOptions
 
-
 namespace e_calculation_method
 {
 
-enum {
+enum
+{
   julian = 0,
   gregorian,
   last, // for extensions
-}; // enum
+};      // enum
 
-} // namespace ECalculationMethod
+} // namespace e_calculation_method
 
 namespace e_target_output
 {
 
-enum {
+enum
+{
   pascha = 0,
   daysUntil,
   weeksBetween,
@@ -69,29 +70,31 @@ enum {
   ascension,
   pentecost,
   last, // for extensions
-}; // enum
+};      // enum
 
-} // namespace e_target_date
+} // namespace e_target_output
 
 namespace e_output_calendar
 {
 
-enum {
+enum
+{
   julian = 0,
   gregorian,
   rev_julian,
   last, // for extensions
-}; // enum
+};      // enum
 
 } // namespace e_output_calendar
 
 namespace e_output_option
 {
 
-enum {
+enum
+{
   byzantine = 0,
   last, // for extensions
-}; // enum
+};      // enum
 
 } // namespace e_output_option
 
