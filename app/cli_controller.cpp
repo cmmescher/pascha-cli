@@ -26,6 +26,10 @@
 #include "pascha/output_options.h"
 #include "pascha/target_dates.h"
 
+#include <chrono>
+#include <ctime>
+#include <sstream>
+
 namespace pascha
 {
 
@@ -34,11 +38,37 @@ CliController::CliController(ICalculatorModel& model) : m_model{&model} {}
 void CliController::calculate(const CalculationOptions& options) const
 {
   using namespace std::literals; // for sv
+  Year year{};
+  bool given_year{true};
+
+  // struct for redirecting std::cout to a buffer for daysUntil output.
+  struct cout_redirect
+  {
+    cout_redirect(std::streambuf* new_buffer) : old(std::cout.rdbuf(new_buffer))
+    {
+    }
+
+    ~cout_redirect() { std::cout.rdbuf(old); }
+
+   private:
+    std::streambuf* old;
+  };
 
   // Ensure the year is valid before continuing.
   if (!validateYear(options.year)) {
     m_model->notify("Invalid year"sv);
     return;
+  }
+
+  if (options.year == -9223372036854775807) {
+    auto now{std::chrono::system_clock::now()};
+    auto nowTime{std::chrono::system_clock::to_time_t(now)};
+    auto currYear{std::localtime(&nowTime)->tm_year + 1900};
+    year = Year{currYear};
+    given_year = false;
+  } else {
+    year = options.year;
+    given_year = true;
   }
 
   // Check the options for verbose output and Pascha name.
@@ -68,7 +98,7 @@ void CliController::calculate(const CalculationOptions& options) const
       std::unique_ptr<ICalculationMethod> gregorian_method{
           new GregorianCalculationMethod{}};
       std::cout << "Weeks between calendars: ";
-      m_model->weeksBetween(options.year, std::move(julian_method),
+      m_model->weeksBetween(year, std::move(julian_method),
                             std::move(gregorian_method));
       continue;
     }
@@ -96,7 +126,30 @@ void CliController::calculate(const CalculationOptions& options) const
       case e_target_output::daysUntil: {
         m_model->setCalculationMethod(std::move(method));
         if (verbose) std::cout << "Days until " << pascha_name << ": ";
-        m_model->daysUntil(options.year);
+
+        if (!given_year) {
+          // Check if Pascha has already passed this year.
+          std::string text;
+          {
+            std::stringstream buffer;
+            cout_redirect redirect{buffer.rdbuf()};
+            m_model->daysUntil(year);
+            text = buffer.str();
+          }
+          long long int days_until_value{0};
+          try {
+            days_until_value = std::stoll(text);
+          } catch (const std::invalid_argument& e) {
+            std::cerr << "Invalid number: " << text;
+            continue;
+          }
+          if (days_until_value < 0) {
+            m_model->daysUntil(year + 1);
+            continue;
+          }
+        }
+
+        m_model->daysUntil(year);
         continue;
       }
       case e_target_output::meatfare: {
@@ -180,7 +233,7 @@ void CliController::calculate(const CalculationOptions& options) const
 
     // 5. Set the calculation method and calculate.
     m_model->setCalculationMethod(std::move(method));
-    m_model->calculate(options.year);
+    m_model->calculate(year);
   }
 
 } // CliController::calculate(const CalculationOptions&) const

@@ -21,8 +21,6 @@
 #include "cli_view.h"
 #include "pascha/calculation_options.h"
 
-#include <chrono>
-#include <ctime>
 #include <getopt.h>
 #include <iomanip>
 #include <string>
@@ -85,10 +83,7 @@ CalculationOptions CliView::parseArgs(int argc, char* argv[])
 {
   int opt{};
   CalculationOptions options{};
-  auto now{std::chrono::system_clock::now()};
-  auto nowTime{std::chrono::system_clock::to_time_t(now)};
-  auto currYear{std::localtime(&nowTime)->tm_year + 1900};
-  m_year = Year{currYear};
+  m_year = -9223372036854775807; // indicates no year given
 
   while ((opt = getopt(argc, argv, ":jgJRGbsdDmcaMlApxXvVs:y:h")) != -1) {
     switch (opt) {
