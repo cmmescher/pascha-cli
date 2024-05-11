@@ -92,6 +92,7 @@ CalculationOptions CliView::parseArgs(int argc, char* argv[])
         break;
       case 'g':
         options.calculation_method = e_calculation_method::gregorian;
+        options.output_calendar = e_output_calendar::gregorian;
         break;
       case 'J': options.output_calendar = e_output_calendar::julian; break;
       case 'R': options.output_calendar = e_output_calendar::rev_julian; break;
