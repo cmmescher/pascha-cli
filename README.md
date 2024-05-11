@@ -87,9 +87,13 @@ any of these, please let me know, so this can be updated.
 
 ## Version
 
-- v2.0
-First released publicly on the O.S. Feast of the Nativity 7532 (2023) (January 7, 2024 N.S.).
-Version begins with v2.0 to parallel the interface update in [pascha v2.0](https://gitlab.com/cmmescher/pascha).
+- *v2.1*
+    - Fixes bug in calculating the days until Pascha when no year is specified and Pascha has already passed in the current year.
+    - Fixes bug where the Gregorian calendar is not used for output by default when no output calendar is specified and the Gregorian calculation method is used.
+
+- *v2.0*
+    - First released publicly on the O.S. Feast of the Nativity 7532 (2023) (January 7, 2024 N.S.).
+    - Version begins with v2.0 to parallel the interface update in [pascha v2.0](https://gitlab.com/cmmescher/pascha).
 
 ## Author
 
